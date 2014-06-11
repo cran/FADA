@@ -1,5 +1,6 @@
 export(FA)
 export(FADA)
+export(decorrelate)
 import(MASS)
 import(elasticnet)
 import(sparseLDA)

@@ -65,16 +65,16 @@ Returns a list with the following elements:
 This function performs supervised classification on factor-adjusted data.
 }
 \examples{
-data(dta)
-data(test)
+data(data.train)
+data(data.test)
 
 # When testing data set is provided
-res = FA(dta, test)
+res = FA(data.train, data.test)
 classif = FADA(res,method="sda",sda.method="lfdr")
 
 ### Not run 
 # When no testing data set is provided
-# res = FA(dta)
+# res = FA(data.train)
 # classif = FADA(res,nfold.cv = 30, method="sda",sda.method="lfdr")
 }
 \author{

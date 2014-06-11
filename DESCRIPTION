@@ -2,7 +2,7 @@ Package: FADA
 Type: Package
 Title: Variable selection for supervised classification in high
         dimension
-Version: 1.0
+Version: 1.1
 Date: 2014-06-11
 Author: Emeline Perthame (Agrocampus Ouest, Rennes, France), Chloe Friguet
     (Universite de Bretagne Sud, Vannes, France) and David Causeur (Agrocampus
@@ -18,7 +18,7 @@ Description: The functions provided in the FADA (Factor Adjusted Discriminant An
 License: GPL (>= 2)
 Depends: MASS, elasticnet
 Imports: sparseLDA,sda,glmnet,mnormt
-Packaged: 2014-07-10 10:20:42 UTC; Emeline
+Packaged: 2014-08-28 14:33:08 UTC; Emeline
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2014-07-10 16:42:51
+Date/Publication: 2014-09-01 12:59:19

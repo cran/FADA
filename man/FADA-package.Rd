@@ -21,7 +21,7 @@ License: \tab GPL (>= 2)\cr
 }
 The functions available in this package are used in this order: 
 \itemize{
-\item Step 1: Decorrelation of the training (and testing) dataset using a factor model of the covariance by the \code{FA} function. The number of factors of the model can be estimated or forced.
+\item Step 1: Decorrelation of the training (and testing) dataset using a factor model of the covariance by the \code{FA} function. The number of factors of the model can be estimated or forced. Training and testing data set can be decorrelated together by the \code{FA} function or one after the other by using first the \code{FA} function to decorrelate the training data set and afterward the \code{decorrelate} function to decorrelate the testing data set.
 \item Step 2: Estimation of a supervised classification model using the decorrelated training dataset by the \code{FADA} function. User can choose among several classification methods (more details in the manual of \code{FADA} function). 
 \item Step 3: If needed, computation of the error rate by the \code{FADA} function, either using a supplementary test dataset or by k-fold cross-validation.}
 }
@@ -47,15 +47,20 @@ Perthame, E., Friguet, C. and Causeur, D. (2014), Stability of feature selection
  ### Not run 
  ### example of an entire analysis with FADA package if a testing data set is available
  ### loading data
- # data(dta)
- # data(test)
+ # data(data.train)
+ # data(data.test)
  
- # dim(dta$x) # 30 250
- # dim(test$x) # 1000 250
+ # dim(data.train$x) # 30 250
+ # dim(data.test$x) # 1000 250
  
  ### decorrelation step
- # res = FA(dta,test) # Optimal number of factors is 2
+ # res = FA(data.train,data.test) # Optimal number of factors is 2
  
+ ### decorrelation of the training data set only
+ # res = FA(data.train)
+ ### decorrelation of the testing data set afterward
+ # res2 = decorrelate(res,data.test)
+
  ### classification step with sda, using local false discovery rate for variable selection
  ### linear discriminant analysis
  # FADA.LDA = FADA(res,method="sda",sda.method="lfdr")
@@ -68,10 +73,10 @@ Perthame, E., Friguet, C. and Causeur, D. (2014), Stability of feature selection
  ### loading data
  
  ### decorrelation step
- # res = FA(dta) # Optimal number of factors is 2
+ # res = FA(data.train) # Optimal number of factors is 2
  
  ### classification step with sda, using local false discovery rate for variable selection
  ### linear discriminant analysis, error rate is computed by leave-one-out CV
- # FADA.LDA = FADA(res,nfold.cv = length(dta$y),method="sda",sda.method="lfdr")
+ # FADA.LDA = FADA(res,nfold.cv = length(data.train$y),method="sda",sda.method="lfdr")
 
 }

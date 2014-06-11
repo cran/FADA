@@ -1,0 +1,11 @@
+372d47f736de7cb5de6ffd3aab70dd32 *DESCRIPTION
+67a0ca37257096878b1aa475fc5b934d *NAMESPACE
+a6386e09fd85c0cce8a785575cf913cd *R/funcFADA.R
+7782d8030fc2169015f7964ed36e49be *data/datalist
+3b7566b2da47fe0b8bc5a497c334b2d4 *data/dta.rda
+5e566d5ab2da2faf270d4af17d45d219 *data/test.rda
+79fa8ddb94064c4e758927df64d9ed2e *man/FA.Rd
+23fc589a6d1e18e52ef03607cb631db7 *man/FADA-package.Rd
+aeb2014756a7e5ab3ced2d4e9c3cf080 *man/FADA.Rd
+a484a416d0690d7544b07981aae1bbf6 *man/dta.Rd
+dc85e44b3d633ece3b2950f855e2cd4d *man/test.Rd

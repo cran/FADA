@@ -10,11 +10,11 @@ which mean depends on a group membership given by the y component. The variance 
 }
 \usage{data(data.train)}
 \format{
-A list with 2 compenents. \code{x} is a 30x250 matrix of simulated explanatory variables. \code{y} is a 30x1 grouping variable (coded 1 and 2).
+A list with 2 components. \code{x} is a 30x250 matrix of simulated explanatory variables. \code{y} is a 30x1 grouping variable (coded 1 and 2).
 }
 \examples{
 data(data.train)
-dim(data.train$x) # 30 500
+dim(data.train$x) # 30 250
 data.train$y # 2 levels
 hist(cor(data.train$x[data.train$y==1,])) # high dependence 
 hist(cor(data.train$x[data.train$y==2,]))

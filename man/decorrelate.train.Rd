@@ -1,15 +1,14 @@
-\name{FA}
-\alias{FA}
-\title{Factor Adjusted Discriminant Analysis 1: Decorrelation of the data}
+\name{decorrelate.train}
+\alias{decorrelate.train}
+\title{Factor Adjusted Discriminant Analysis 1: Decorrelation of the training data}
 \usage{
-FA(dta, test=NULL, nbf=NULL, maxnbfactors=12, nfolds=10,grouped=FALSE,
-plot.diagnostic=FALSE, min.err = 0.001, verbose=TRUE)
+decorrelate.train(data.train, nbf = NULL, maxnbfactors = 12, nfolds = 10, 
+    grouped = FALSE, plot.diagnostic = FALSE, min.err = 0.001, 
+    verbose = TRUE,EM=TRUE,maxiter=15)
 }
 \arguments{
-\item{dta}{A list containing the training dataset with the following components: \code{x} is the n x p matrix of explanatory variables, where n stands for the training sample size and
+\item{data.train}{A list containing the training dataset with the following components: \code{x} is the n x p matrix of explanatory variables, where n stands for the training sample size and
 p for the number of explanatory variables ; \code{y} is a numeric vector giving the group of each individual numbered from 1 to K.}
-
-\item{test}{A list containing the test dataset, with the same list structure as dta.}
 
 \item{nbf}{Number of factors. If \code{nbf = NULL}, the number of factors is estimated. \code{nbf} can
 also be set to a positive integer value. If \code{nbf = 0}, the data are not factor-adjusted.}
@@ -31,24 +30,34 @@ to manually determine the optimal number of factors.}
 \item{min.err}{Threshold of convergence of the algorithm criterion. Default is min.err=0.001.}
 
 \item{verbose}{Print out number of factors and values of the objective criterion along the iterations. Default is \code{TRUE}.}
+
+\item{EM}{The method used to estimate the parameters of the factor model. If \code{EM=TRUE}, parameters are estimated by an EM algorithm. Setting \code{EM=TRUE} is recommended when the number of covariates exceeds the number of observations. If \code{EM=FALSE}, the parameters are estimated by maximum-likelihood using \code{factanal}. Default is \code{EM=TRUE}}
+
+\item{maxiter}{Maximum number of iterations for estimation of the factor model.}
 }
 \value{
 Returns a list with the following elements:
 
 \item{meanclass}{Group means estimated after iterative decorrelation}
 
-\item{fadta}{Decorrelated training data}
-
-\item{fatest}{Decorrelated testing data}
+\item{fa.training}{Decorrelated training data}
 
 \item{Psi}{Estimation of the factor model parameters: specific variance}
 
 \item{B}{Estimation of the factor model parameters: loadings}
 
+\item{factors.training}{Scores of the trainings individuals on the factors}
+
 \item{groups}{Recall of group variable of training data}
+
+\item{proba.training}{Internal value (estimation of individual probabilities for the training dataset)}
+
+\item{mod.decorrelate.test}{Internal value (classification model)}
+
+\item{data.train}{Internal value (recall of the training data set)}
 }
 \description{
-This function decorrelates the training dataset and, optionnally, the test dataset by adjusting data for the effects of latent factors of dependence.
+This function decorrelates the training dataset by adjusting data for the effects of latent factors of dependence.
 }
 \references{
 Friedman, J., Hastie, T. and Tibshirani, R. (2010), Regularization paths for generalized linear models via coordinate descent. Journal of Statistical Software, 33, 1-22.
@@ -61,15 +70,15 @@ Perthame, E., Friguet, C. and Causeur, D. (2014), Stability of feature selection
 \examples{
 data(data.train)
 data(data.test)
-res = FA(data.train,data.test) #  when the optimal number of factors is unknown
+res = decorrelate.train(data.train) #  when the optimal number of factors is unknown
 
 ### Not run 
-# res0 = FA(data.train,data.test,nbf=2) #  when the number of factors is forced
+# res0 = decorrelate.train(data.train,nbf=3) #  when the number of factors is forced
 }
 \author{
 Emeline Perthame, Chloe Friguet and David Causeur
 }
 \seealso{
-\code{\link[FADA]{FADA-package}} \code{\link[FADA]{FADA} } \code{\link[glmnet]{glmnet-package}}
+\code{\link[FADA]{FADA-package}} \code{\link[FADA]{FADA} } \code{\link[glmnet]{glmnet-package}} \code{\link{factanal}}
 }
 

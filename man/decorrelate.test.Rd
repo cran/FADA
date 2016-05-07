@@ -43,7 +43,7 @@ Friedman, J., Hastie, T. and Tibshirani, R. (2010), Regularization paths for gen
 
 Friguet, C., Kloareg, M. and Causeur, D. (2009), A factor model approach to multiple testing under dependence. Journal of the American Statistical Association, 104:488, 1406-1415.
 
-Perthame, E., Friguet, C. and Causeur, D. (2014), Stability of feature selection in classification issues for high-dimensional correlated data, Submitted.
+Perthame, E., Friguet, C. and Causeur, D. (2015), Stability of feature selection in classification issues for high-dimensional correlated data, Statistics and Computing.
 }
 
 \examples{

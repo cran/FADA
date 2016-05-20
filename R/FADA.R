@@ -12,7 +12,7 @@ FADA = function (faobject, K=10,B=20, nbf.cv = NULL,method = c("glmnet",
     if (!hasArg(EM)) {EM <- faobject$EM}
     if (!hasArg(maxiter)) {maxiter <- faobject$maxiter}
     if (! is.null(faobject$fa.testing)) {
-        out <- FADA.tmp(faobject= faobject, method, sda.method, ...)
+        out <- FADA.tmp(faobject= faobject, method, sda.method, alpha,...)
         proba.train <- out$proba.train
         proba.test <- out$proba.test
         predict.test <- out$predict.test
@@ -32,12 +32,12 @@ FADA = function (faobject, K=10,B=20, nbf.cv = NULL,method = c("glmnet",
            proba.train <- predict(out,fadta,type="response")
         }
         if (method == "sda") {
-            ranking.LDA <- sda::sda.ranking(fadta, groups, 
-                verbose = FALSE)
+            ranking.LDA <- mysda.ranking(fadta, groups, 
+                verbose = FALSE,...)
             if (sda.method == "lfdr") {selected <- as.numeric(ranking.LDA[ranking.LDA[, "lfdr"] < 0.8, "idx"])}
             if (sda.method == "HC") { thr <- which.max(ranking.LDA[1:round(alpha * p), "HC"]) ;
                 selected <- as.numeric(ranking.LDA[1:thr, "idx"]) }
-            out <- sda::sda(fadta[, selected,drop=FALSE], groups, verbose = FALSE)
+            out <- mysda(fadta[, selected,drop=FALSE], groups, verbose = FALSE,...)
             proba.train <- sda::predict.sda(out,fadta[,selected,drop=FALSE],verbose=FALSE)$posterior
         }
         if (method == "sparseLDA") {

@@ -234,7 +234,7 @@ emfa.nbf = function(csdata, S, eig, vy, nbf, EM = TRUE, minerr = 1e-06, verbose 
 	return(res)
 }
 
-LassoML <- function(data.train, ...) {
+LassoML <- function(data.train,nfolds=10,...) {
 	p <- ncol(data.train$x)
 	n <- nrow(data.train$x)
 	nbclass <- length(unique(data.train$y))
@@ -243,11 +243,13 @@ LassoML <- function(data.train, ...) {
 		stop("Group variable must be 1,2, ...")
 	}
 	family <- ifelse(nbclass == 2, "binomial", "multinomial")
+	if (n/nfolds <= 8 & missing(nfolds)) {nfolds=n}
+	if (n/nfolds <= 3) {grouped=FALSE} else {grouped=TRUE} 
 	cvmod <- cv.glmnet(x = as.matrix(data.train$x), y = data.train$y, family = family, 
-		type.measure = "class")
+		type.measure ="class",nfolds=nfolds,grouped=grouped)
 	lambda.min <- cvmod$lambda.min
 	mod <- glmnet(x = as.matrix(data.train$x), y = data.train$y, family = family, 
-		lambda = lambda.min, ...)
+		lambda = lambda.min)
 	proba.train <- predict(mod, newx = as.matrix(data.train$x), type = "response")
 	if (nbclass == 2) {
 		proba.train <- matrix(c(1 - proba.train, proba.train), ncol = 2, byrow = FALSE)
@@ -257,6 +259,17 @@ LassoML <- function(data.train, ...) {
 	}
 	return(list(proba.train = proba.train, model = mod))
 }
+
+mysda.ranking = function(Xtrain, L, lambda, lambda.var, lambda.freqs,
+  ranking.score=c("entropy", "avg", "max"), 
+  diagonal=FALSE, fdr=TRUE, plot.fdr=FALSE, verbose=TRUE,...){
+   return(sda::sda.ranking(Xtrain, L, lambda, lambda.var, lambda.freqs,
+  ranking.score, diagonal, fdr, plot.fdr, verbose))	
+  }
+
+mysda = function(Xtrain, L, lambda, lambda.var, lambda.freqs, diagonal=FALSE, verbose=TRUE,...){
+	return(sda::sda(Xtrain, L, lambda, lambda.var, lambda.freqs, diagonal, verbose))
+	}
 
 FADA.tmp <- function(faobject, method, sda.method, alpha,...) {
 	fadta <- faobject$fa.training
@@ -276,14 +289,14 @@ FADA.tmp <- function(faobject, method, sda.method, alpha,...) {
 		proba.train <- predict(out, fadta, type = "response")
 	}
 	if (method == "sda") {
-		ranking.LDA <- sda::sda.ranking(fadta, groups, verbose = FALSE,...)
+		ranking.LDA <- mysda.ranking(fadta, groups, verbose = FALSE,...)
 		if (sda.method == "lfdr") {
 			selected <- as.numeric(ranking.LDA[ranking.LDA[, "lfdr"] < 0.8, "idx"])
 		} else {
 			thr <- which.max(ranking.LDA[1:round(alpha * p), "HC"])
 			selected <- as.numeric(ranking.LDA[1:thr, "idx"])
 		}
-		out <- sda::sda(fadta[, selected, drop = FALSE], groups, verbose = FALSE,...)
+		out <- mysda(fadta[, selected, drop = FALSE], groups, verbose = FALSE,...)
 		pred <- sda::predict.sda(out, fatest[, selected, drop = FALSE], verbose = FALSE)
 		proba.test <- pred$posterior
 		predict.test <- pred$class

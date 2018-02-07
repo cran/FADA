@@ -27,7 +27,7 @@ FADA = function (faobject, K=10,B=20, nbf.cv = NULL,method = c("glmnet",
         p <- ncol(fadta)
         if (method == "glmnet") {
             out <- LassoML(list(x = fadta, y = groups),...)
-            selected <- out$selected
+            selected <- lapply(out$model$beta,function(x) which(abs(x)>0.0001))
            out <- out$model
            proba.train <- predict(out,fadta,type="response")
         }

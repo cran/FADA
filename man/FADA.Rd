@@ -6,7 +6,7 @@ FADA(faobject, K=10,B=20, nbf.cv = NULL,method = c("glmnet",
     "sda", "sparseLDA"), sda.method = c("lfdr", "HC"), alpha=0.1, ...) 
 }
 \arguments{
-\item{faobject}{An object returned by function \code{FA}.}
+\item{faobject}{An object returned by function \code{decorrelate.train} or \code{decorrelate.test}.}
 
 \item{K}{Number of folds to estimate classification error rate, only when no testing data is provided. Default is \code{K=10}.}
 

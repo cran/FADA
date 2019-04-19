@@ -159,7 +159,7 @@ nbfactors <- function(data.train, maxnbfactors = 12, diagnostic.plot, minerr = 0
 	Blist <- lapply(falist, function(fa, m) matrix(fa$B, nrow = m), m = m)
 	sdt <- VarInflation(data.train, Blist, maxnbfactors, dig)
 	if (diagnostic.plot) {
-		dev.new()
+		# dev.new()
 		plot(0:maxnbfactors, sdt, ylab = "Variance Inflation Criterion", xlab = "Number of factors", 
 			bty = "l", lwd = 1.25, type = "b", pch = 16, cex.lab = 1.25, cex = 1.25, 
 			cex.axis = 1.25)
@@ -168,7 +168,9 @@ nbfactors <- function(data.train, maxnbfactors = 12, diagnostic.plot, minerr = 0
 		opt <- 0
 	if (which.min(sdt) > 1) {
 		jumps <- -diff(sdt)/sdt[-length(sdt)]
-		opt <- max((1:maxnbfactors)[jumps > jumps.nbfactor])
+		if (all(!(jumps > jumps.nbfactor))){opt <- which.min(sdt)-1} else {
+		  opt <- max((1:maxnbfactors)[jumps > jumps.nbfactor])
+		}
 	}
 	list(criterion = sdt, optimalnbfactors = opt)
 }

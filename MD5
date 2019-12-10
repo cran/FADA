@@ -1,9 +1,9 @@
-849327a086ebea1fba97719b38cedab8 *DESCRIPTION
+f850c728aeae04d455d06b3208ebfb4e *DESCRIPTION
 394b367d21013fca4784605758e8c50f *NAMESPACE
 37f2e05e7f5bd04bccbecdca5ac9787c *R/FADA.R
 ef35ca01415bc93305f05e6131825a49 *R/decorrelate.test.R
 9b02a0fed1f0c9e73cba50602f4af248 *R/decorrelate.train.R
-6cca1a5bc39e53a73e45727173321102 *R/func.R
+b43a6570ee71e14d72f2643004bf26ac *R/func.R
 a962e28b8c971f494cc8fdb2ebd9f284 *data/data.test.rda
 74bad74720767d4767641350bc59caab *data/data.train.rda
 43ae907e5c922cdaa7e5f533c768b2a8 *data/datalist

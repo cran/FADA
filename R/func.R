@@ -54,8 +54,8 @@ VarInflation <- function(data.train, Blist, maxnbfactors, dig) {
 	return(sdt)
 }
 ifa = function(Psi, B) {
-	if (class(B) == "numeric") 
-		B = matrix(B, ncol = 1)
+  p = length(Psi)
+	if (length(B) == p) {B = matrix(B, ncol = 1)}
 	q = ncol(B)
 	Phi = rep(0, length(Psi))
 	Phi[abs(Psi) > 1e-05] = 1/Psi[abs(Psi) > 1e-05]
